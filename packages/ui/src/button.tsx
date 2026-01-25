@@ -6,7 +6,7 @@ interface ButtonProps {
   children: ReactNode;
   className?: string;
  
-  handelonclick:any
+  handelonclick?: any
 }
 
 export const Button = ({ children, className,handelonclick  }: ButtonProps) => {

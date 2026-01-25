@@ -8,33 +8,32 @@ import { useCollapseStore } from "../hooks/zustand/CheckCollapsestate";
  import {useUploadStore} from "../hooks/zustand/UploadState"
 
 export default function Sidenav() {
-  const { collapse, toggleCollapse } = useCollapseStore();
+  const { collapseNavbar,  toggleCollapseNavbar } = useCollapseStore();
 
    const {showUpload,setUpload} =useUploadStore()
 
   return (
     <div
-      className={`h-screen text-black bg-red-50/20 transition-all duration-300 ${
-        collapse ? " col-span-1" : "col-span-2"
-      } flex flex-col relative border-r-1  items-center `}
+      className={`h-screen text-black transition-all duration-300 ${collapseNavbar ? "col-span-1" : "col-span-2"} relative border-r-1 items-center`}
     >
       {/* collapse button */}
       <Button
         className={`mt-2 mb-4 p-1 border h-10 w-10 flex items-center justify-center bg-slate-100 rounded-md  transition-all duration-300 absolute right-2 top-1 `}
-        handelonclick={toggleCollapse}
+        handelonclick={ toggleCollapseNavbar}
       >
-        {collapse ? <FaChevronRight /> : <FaChevronLeft />}
+        {collapseNavbar ? <FaChevronRight /> : <FaChevronLeft />}
       </Button>
       {/* upload button */}
       <Button
-        className={`p-1 border flex items-center justify-center transition-all duration-300 absolute top-20 hover:custom-radial-bg  ${
-          collapse ? "max-h-20 h-10 w-10 " : "max-h-20 h-20 w-35"
+        className={`p-1 border flex items-center bg-white rounded-sm  justify-center transition-all duration-300 absolute top-20 hover:custom-radial-bg  ${
+          collapseNavbar ? "max-w-7/8 h-8 w-10 " : "max-w-7/8 h-12 w-35"
         }`}
         handelonclick={setUpload}
       >
-        {collapse ? <LuUpload /> : "Add Resources"}
+        {collapseNavbar ? <LuUpload /> : "Add Resources"}
       </Button>
       {/* Optionally render Uploadfile component if showUpload is true */}
+      {/* {!collapse &&  } */}
        
     </div>
   );

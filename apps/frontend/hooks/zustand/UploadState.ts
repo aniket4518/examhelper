@@ -4,9 +4,9 @@ import {create} from "zustand"
  setUpload:(value:boolean) =>void
   
  }
-export const useUploadStore = create < uploadVisibilityState > ((Set)=>({
+export const useUploadStore = create < uploadVisibilityState > ((set)=>({
     showUpload : false,
-    setUpload:(value)=>Set({showUpload:value}),
+    setUpload:(value)=>set({showUpload:value}),
     
 }))
  
