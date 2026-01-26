@@ -7,7 +7,7 @@ import Sidenav from "../components/Sidenav";
 export default function Home() {
   const {showUpload,setUpload} =useUploadStore()
   return (
-        <div className="min-h-screen custom-radial-bg grid grid-cols-12 gap-5"> 
+        <div className="min-h-screen custom-radial-bg grid grid-cols-12 gap-1"> 
         <Sidenav/>
         {/* <ChatInterface/> */}
          { showUpload? <Uploadfile />: <ChatInterface/>}

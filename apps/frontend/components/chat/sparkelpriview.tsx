@@ -18,8 +18,11 @@ export function SparklesPreview() {
         <div className="absolute inset-x-60 top-0 bg-gradient-to-r from-transparent via-cyan-100 to-transparent h-px w-1/4" />
 
         {/* Upload Button absolutely positioned just above sparklescore */}
+         <span className="relative top-10 text-2xl">
+          Add a resource to get started
+         </span>
         <Button
-          className="absolute left-1/2 -translate-x-1/2 top-10 border flex items-center justify-center transition-all text-xl duration-300 bg-black/60 text-white hover:custom-radial-bg h-10 w-30 rounded-lg font-bold z-10"
+          className="absolute left-1/2 -translate-x-1/2 top-20 border flex items-center justify-center transition-all text-xl duration-300 bg-black/60 text-white hover:custom-radial-bg h-10 w-30 rounded-lg font-bold z-10"
           handelonclick={setUpload}
         >
           Upload
@@ -28,10 +31,10 @@ export function SparklesPreview() {
         {/* Core component */}
         <SparklesCore
           background="transparent"
-          minSize={0.4}
-          maxSize={1}
+          minSize={1}
+          maxSize={1.3}
           particleDensity={1400}
-          particleColor="#759b28"
+          particleColor="#dfc43d"
           className="w-full h-full"
         />
 

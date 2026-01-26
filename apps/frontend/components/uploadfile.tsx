@@ -12,7 +12,7 @@ export function Uploadfile() {
  
   if (!showUpload) return null;
   return (
-    <div className="col-span-6 min-h-4/5 border border-dashed bg-white dark:bg-black border-neutral-200 dark:border-neutral-800 rounded-lg h-1/2  ml-20">
+    <div className="col-span-6 col-start-4 min-h-4/5 border border-dashed bg-white dark:bg-black border-neutral-200 dark:border-neutral-800 rounded-lg h-1/2 self-center">
       <div className="flex justify-end">
         <Button
           className="w-10 h-10 rounded-lg bg-slate-100 place-content-center p-2"
