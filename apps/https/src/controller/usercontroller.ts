@@ -1,4 +1,4 @@
-import { prisma } from "@repo/db/prismauser";
+import { prisma } from "@repo/db";
 import { Request, Response } from "express";
 import {createToken} from "../service/authservice"
 import bcrypt from "bcrypt"

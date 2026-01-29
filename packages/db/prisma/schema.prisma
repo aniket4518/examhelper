@@ -12,6 +12,10 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+enum Role {
+  Admin
+  User
+}
 model User {
   id        String    @id @default(uuid())
   role   Role      @default(User)
@@ -19,18 +23,34 @@ model User {
   password  String?
   createdAt DateTime  @default(now())
   name      String?
-  roms      Room[]
-  
+  membership  Member[]
+  fileUploads  FileUpload[]
 }
-enum Role {
+
+ 
+enum MemberRole {
   Admin
-  User 
+  Member
 }
 model Room {
   id     String    @id @default(uuid())
-  slag      String
+  slug      String
   createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  ownerId   String
-  owner     User      @relation(fields: [ownerId], references: [id])    
+  updatedAt DateTime  @updatedAt 
+  members   Member[] 
+}
+model Member {
+  id       String  @id @default(uuid())
+  userId   String
+  roomId   String 
+  role      MemberRole  @default (Member)
+  user      User    @relation(fields:[userId],references:[id])
+  room      Room    @relation(fields:[roomId],references:[id])
+}
+ 
+model FileUpload{
+  id        String    @id  @default(uuid())
+  url       String
+  userId    String
+  user      User       @relation(fields: [userId], references: [id])
 }

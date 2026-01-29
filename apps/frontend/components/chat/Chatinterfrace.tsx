@@ -3,8 +3,7 @@ import ShinyText, { Shiny } from '../ui/ShinyText';
 import { SparklesPreview } from "./sparkelpriview";
 import TextType from '../ui/TextType';
 import {useUploadedFilesStore} from "../../hooks/zustand/handeluploads"
-import { Button } from "../../../../packages/ui/src/button";
-import { BiSend } from "react-icons/bi";
+import { Button } from "../../../../packages/ui/src/button"; 
 import { BsSendDashFill } from "react-icons/bs";
 type ParticlesProps = {
   id?: string;
@@ -20,9 +19,10 @@ type ParticlesProps = {
 
 export default function ChatInterface(){
   const {hasFile}= useUploadedFilesStore()
+  const isdisabled= hasFile? false : true
 const { collapseNavbar, toggleCollapseNavbar,collapseStudio } = useCollapseStore();
 function click(){
-
+ 
 
 } 
  
@@ -63,7 +63,7 @@ function click(){
       /> */}
   <SparklesPreview/>
   <div className="w-3/5 h-1/4 ml-4 rounded-lg border-3 inset-shadow-sm inset-shadow-slate-500/50 flex items-center">
-    <textarea
+    <textarea disabled={isdisabled}
       className="w-7/8 p-3 border-0 focus:outline-none focus:ring-0 justify-self-center resize-none min-h-[70px] max-h-[60px] overflow-y-scroll scrollbar-hide"
       rows={2}
       placeholder="Type your message..."

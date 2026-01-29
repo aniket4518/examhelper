@@ -1,5 +1,6 @@
 import { cn } from "../../lib/utils";
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
+import { useUploadedFilesStore } from "../../hooks/zustand/handeluploads";
 import { motion } from "motion/react";
 import { IconUpload } from "@tabler/icons-react";
 import { useDropzone } from "react-dropzone";
@@ -25,17 +26,13 @@ const secondaryVariant = {
   },
 };
 
-export const FileUpload = ({
-  onChange,
-}: {
-  onChange?: (files: File[]) => void;
-}) => {
-  const [files, setFiles] = useState<File[]>([]);
+export const FileUpload: React.FC<{ onChange?: (files: File[]) => void }> = ({ onChange }) => {
+  const { files, addFiles } = useUploadedFilesStore();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileChange = (newFiles: File[]) => {
-    setFiles((prevFiles) => [...prevFiles, ...newFiles]);
-    onChange && onChange(newFiles);
+    addFiles(newFiles);
+    // onChange && onChange(newFiles);
   };
 
   const handleClick = () => {
@@ -43,7 +40,7 @@ export const FileUpload = ({
   };
 
   const { getRootProps, isDragActive } = useDropzone({
-    multiple: false,
+    multiple: true,
     noClick: true,
     onDrop: handleFileChange,
     onDropRejected: (error) => {
@@ -51,8 +48,18 @@ export const FileUpload = ({
     },
   });
 
+  const { ref, onClick, onKeyDown, onDrop, onDragEnter, onDragOver, onDragLeave } = getRootProps();
   return (
-    <div className="w-full" {...getRootProps()}>
+    <div
+      className="w-full"
+      ref={ref}
+      onClick={onClick}
+      onKeyDown={onKeyDown}
+      onDrop={onDrop}
+      onDragEnter={onDragEnter}
+      onDragOver={onDragOver}
+      onDragLeave={onDragLeave}
+    >
       <motion.div
         onClick={handleClick}
         whileHover="animate"
@@ -62,6 +69,7 @@ export const FileUpload = ({
           ref={fileInputRef}
           id="file-upload-handle"
           type="file"
+          multiple
           onChange={(e) => handleFileChange(Array.from(e.target.files || []))}
           className="hidden"
         />
