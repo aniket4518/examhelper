@@ -1,21 +1,30 @@
-/*
-  Warnings:
+-- CreateEnum
+CREATE TYPE "Role" AS ENUM ('Admin', 'User');
 
-  - You are about to drop the column `ownerId` on the `Room` table. All the data in the column will be lost.
-  - You are about to drop the column `slag` on the `Room` table. All the data in the column will be lost.
-  - Added the required column `slug` to the `Room` table without a default value. This is not possible if the table is not empty.
-
-*/
 -- CreateEnum
 CREATE TYPE "MemberRole" AS ENUM ('Admin', 'Member');
 
--- DropForeignKey
-ALTER TABLE "Room" DROP CONSTRAINT "Room_ownerId_fkey";
+-- CreateTable
+CREATE TABLE "User" (
+    "id" TEXT NOT NULL,
+    "role" "Role" NOT NULL DEFAULT 'User',
+    "email" TEXT,
+    "password" TEXT,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "name" TEXT,
 
--- AlterTable
-ALTER TABLE "Room" DROP COLUMN "ownerId",
-DROP COLUMN "slag",
-ADD COLUMN     "slug" TEXT NOT NULL;
+    CONSTRAINT "User_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Room" (
+    "id" TEXT NOT NULL,
+    "slug" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "Room_pkey" PRIMARY KEY ("id")
+);
 
 -- CreateTable
 CREATE TABLE "Member" (
@@ -35,6 +44,9 @@ CREATE TABLE "FileUpload" (
 
     CONSTRAINT "FileUpload_pkey" PRIMARY KEY ("id")
 );
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- AddForeignKey
 ALTER TABLE "Member" ADD CONSTRAINT "Member_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

@@ -1,9 +1,22 @@
 {
-  "extends":"@repo/typescript-config/base.json",
   "compilerOptions": {
+    "rootDir": ".",
     "outDir": "./dist",
-    "rootDir": "./src"
+    "module": "nodenext",
+    "target": "esnext",
+    "types": ["node"],
+    "sourceMap": true,
+    "declaration": true,
+    "declarationMap": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "strict": true,
+    "jsx": "react-jsx",
+    "verbatimModuleSyntax": true,
+    "isolatedModules": true,
+    "noUncheckedSideEffectImports": true,
+    "moduleDetection": "force",
+    "skipLibCheck": true
   },
-  "include": ["src/**/*.ts", "prisma/**/*.prisma", "src/types/**/*.d.ts"],
-  "exclude": ["node_modules", "dist", "prisma/migrations"]
+  "include": ["src/**/*", "generated/**/*", "src/prisma.config.ts"]
 }

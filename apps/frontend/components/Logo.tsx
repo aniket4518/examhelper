@@ -5,29 +5,36 @@ import { FaChevronRight, FaChevronLeft } from "react-icons/fa";
 import logo from "../public/logo.png";
 
 export default function Logo() {
-    const { collapseNavbar,  toggleCollapseNavbar } = useCollapseStore();
+  const { collapseNavbar, toggleCollapseNavbar } = useCollapseStore();
   return (
-    <div className="grid grid-cols-3 gap-1 w-full h-1/10 justify-items-center">
-      {/* Show logo with name and id below here */}
-      <div className="col-span-2 justify-items-center text-black flex display-inline font-bold items-center">
+    <div className="flex items-center justify-between w-full p-4 border-b border-neutral-800">
+      {/* Logo with name */}
+      <div className="flex items-center gap-3">
         <Image
           src={logo}
-          alt="logo.img"
-          className={`${collapseNavbar? "w-full h-full" : "w-1/2 h-full"} align-self-top`}
-          width={100}
-          height={100}
+          alt="logo"
+          className={`${collapseNavbar ? "w-10 h-10" : "w-12 h-12"} rounded-lg transition-all duration-300`}
+          width={48}
+          height={48}
         />
-        {!collapseNavbar &&<span className="justify-items-center h-1/2">camp spot</span> }
+        {!collapseNavbar && (
+          <span className="text-lg font-semibold text-neutral-100">
+            camp spot
+          </span>
+        )}
       </div>
-      {/* show toggle nav button here */}
-      <div className="col-span-1">
-        <Button
-          className={`mt-2 mb-4 p-1 border h-7 w-7 flex items-center justify-center bg-slate-100 rounded-md  transition-all duration-300 absolute right-2 top-3 `}
-          handelonclick={toggleCollapseNavbar}
-        >
-          {collapseNavbar ? <FaChevronRight /> : <FaChevronLeft />}
-        </Button>
-      </div>
+
+      {/* Toggle button */}
+      <Button
+        className="p-2 w-8 h-8 flex items-center justify-center rounded-lg btn-ghost transition-all duration-200"
+        handelonclick={toggleCollapseNavbar}
+      >
+        {collapseNavbar ? (
+          <FaChevronRight className="text-sm text-neutral-400" />
+        ) : (
+          <FaChevronLeft className="text-sm text-neutral-400" />
+        )}
+      </Button>
     </div>
   );
 }

@@ -1,6 +1,6 @@
-import { prisma } from "@repo/db";
-import { Request, Response } from "express";
-import {createToken} from "../service/authservice"
+import { prisma } from "../config/prisma.js"
+import type { Request, Response } from "express";
+import {createToken} from "../service/authservice.js"
 import bcrypt from "bcrypt"
 import { createUserSchema, signInSchema } from "@repo/zod/zod";
 

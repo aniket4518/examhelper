@@ -1,5 +1,5 @@
 import express from "express"
-import {Request,Response } from "express"
+import type {Request,Response } from "express"
 export const uploadFiles=async(req:Request,res:Response)=>{
     try{
   if(!req.files){

@@ -1,6 +1,6 @@
 import React from "react";
-import  { useCollapseStore} from "../../hooks/zustand/CheckCollapsestate"
- 
+import { useCollapseStore } from "../../hooks/zustand/CheckCollapsestate";
+
 const tools = [
   { label: "Audio Overview", icon: "audio_file" },
   { label: "Video Overview", icon: "movie" },
@@ -8,41 +8,48 @@ const tools = [
   { label: "Reports", icon: "description" },
   { label: "Flashcards", icon: "style" },
   { label: "Quiz", icon: "quiz" },
-  { label: "Infographic", icon: "BETA" }, 
+  { label: "Infographic", icon: "BETA" },
   { label: "Data Table", icon: "table_chart" },
 ];
 
-// const badgeStyle =
-//   "ml-2 px-2 py-0.5 text-xs font-semibold rounded bg-yellow-200 text-yellow-800";
-
 export default function Tools() {
   const { collapseStudio } = useCollapseStore();
+
   return (
-    <div className={collapseStudio ? "flex flex-col gap-3 justify-center items-center p-2 mt-20 justify-contents-center w-full" : "p-4 mt-30"}>
+    <div className={collapseStudio ? "flex flex-col gap-2 items-center p-2 pt-16 w-full" : "p-4 pt-16"}>
+      {/* Header */}
       {!collapseStudio && (
-        <div className="mb-2 text-sm text-gray-700">
-          Create an Audio Overview in: <span className="text-blue-700">हिन्दी, english</span>
+        <div className="mb-4">
+          <h3 className="text-sm font-medium text-neutral-200 mb-1">Create</h3>
+          <p className="text-xs text-neutral-500">
+            Audio Overview in: <span className="text-neutral-400">हिन्दी, english</span>
+          </p>
         </div>
       )}
-      <div className={collapseStudio ? "flex flex-col gap-3 items-center w-full" : "grid grid-cols-2 gap-4"}>
+
+      {/* Tools grid */}
+      <div className={collapseStudio ? "flex flex-col gap-2 items-center w-full" : "grid grid-cols-2 gap-2"}>
         {tools.map((tool, idx) => (
           <button
             key={idx}
-            className={
-              (collapseStudio
-                ? "flex items-center justify-center self-center p-2 rounded-lg hover:bg-gradient-to-r hover:from-teal-100 hover:to-lime-200 transition relative shadow-md border border-teal-200 text-gray-700 text-xl w-12 h-12 transition-all duration-200"
-                : "flex items-center p-4 rounded-lg bg-gray-100 hover:bg-gradient-to-r hover:from-teal-100 hover:to-lime-200 transition relative"
-              ) + " group"
-            }
+            className={`tool-card group ${collapseStudio
+                ? "w-10 h-10 flex items-center justify-center"
+                : "flex items-center gap-3 p-3 text-left w-full"
+              }`}
           >
             {tool.icon === "BETA" ? (
-              <span className="px-2 py-0.5 text-xs font-semibold rounded bg-yellow-200 text-yellow-800">BETA</span>
+              <span className="badge-beta">BETA</span>
             ) : (
-              <span className={(collapseStudio ? "flex items-center justify-center" : "mr-2 ") + " material-symbols-outlined transition-transform duration-200 group-hover:scale-125 group-hover:-rotate-6"}>
-                  {tool.icon}
+              <span className={`material-symbols-outlined text-neutral-400 transition-all duration-200 group-hover:text-neutral-200 ${collapseStudio ? "text-lg" : "text-xl"
+                }`}>
+                {tool.icon}
               </span>
             )}
-            {!collapseStudio && tool.icon !== "BETA" && tool.label}
+            {!collapseStudio && tool.icon !== "BETA" && (
+              <span className="text-sm text-neutral-300 group-hover:text-neutral-100 transition-colors">
+                {tool.label}
+              </span>
+            )}
           </button>
         ))}
       </div>

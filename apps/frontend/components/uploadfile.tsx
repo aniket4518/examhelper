@@ -1,27 +1,45 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import { FileUpload } from "@/components/ui/file-upload";
 import { Button } from "../../../packages/ui/src/button";
-import { GiCrossedBones } from "react-icons/gi";
-import {useUploadStore} from "../hooks/zustand/UploadState"
-import {useUploadedFilesStore} from "../hooks/zustand/handeluploads"
+import { IoClose } from "react-icons/io5";
+import { useUploadStore } from "../hooks/zustand/UploadState"
+import { useUploadedFilesStore } from "../hooks/zustand/handeluploads"
 
 export function Uploadfile() {
   const { addFiles, clearFiles } = useUploadedFilesStore();
   const { setUpload, showUpload } = useUploadStore();
 
   if (!showUpload) return null;
+
+  // Handle file upload and close panel
+  const handleFilesAdded = (files: File[]) => {
+    addFiles(files);
+    // Close upload panel after files are added
+    if (files.length > 0) {
+      setUpload(false);
+    }
+  };
+
   return (
-    <div className="col-span-6 col-start-3 ml-20 min-h-4/5 border border-dashed bg-white dark:bg-black border-neutral-200 dark:border-neutral-800 rounded-lg h-1/2 self-center">
-      <div className="flex justify-end">
-        <Button
-          className="w-10 h-10 rounded-lg bg-slate-100 place-content-center p-2"
-          handelonclick={() => setUpload(false)}
-        >
-          <GiCrossedBones />
-        </Button>
+    <div className="col-span-6 col-start-3 flex items-center justify-center">
+      <div className="glass-card rounded-xl w-full max-w-2xl mx-8 overflow-hidden">
+        {/* Header */}
+        <div className="flex justify-between items-center p-4 border-b border-neutral-800">
+          <h3 className="text-base font-medium text-neutral-200">Upload Resources</h3>
+          <Button
+            className="w-9 h-9 rounded-lg btn-ghost flex items-center justify-center hover:bg-neutral-800 group transition-all duration-200"
+            handelonclick={() => setUpload(false)}
+          >
+            <IoClose className="text-lg text-neutral-400 group-hover:text-neutral-200" />
+          </Button>
+        </div>
+
+        {/* Upload area */}
+        <div className="p-5">
+          <FileUpload onChange={handleFilesAdded} />
+        </div>
       </div>
-      <FileUpload onChange={addFiles} />
     </div>
   );
 }
