@@ -4,7 +4,9 @@
     "outDir": "./dist",
     "module": "nodenext",
     "target": "esnext",
-    "types": ["node"],
+    "types": [
+      "node"
+    ],
     "sourceMap": true,
     "declaration": true,
     "declarationMap": true,
@@ -18,5 +20,9 @@
     "moduleDetection": "force",
     "skipLibCheck": true
   },
-  "include": ["src/**/*", "generated/**/*", "src/prisma.config.ts"]
+  "include": [
+    "src/**/*",
+    "generated/**/*",
+    "src/prisma.config.ts"
+  ]
 }

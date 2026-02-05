@@ -52,6 +52,8 @@ model Member {
 model FileUpload{
   id        String    @id  @default(uuid())
   url       String
+  filename  String
   userId    String
+  createdAt DateTime  @default(now())
   user      User       @relation(fields: [userId], references: [id])
 }

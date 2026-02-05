@@ -1,13 +1,16 @@
+"use client";
+
 import { useCollapseStore } from "../../hooks/zustand/CheckCollapsestate";
 import ShinyText from '../ui/ShinyText';
 import { SparklesPreview } from "./sparkelpriview";
 import { useUploadedFilesStore } from "../../hooks/zustand/handeluploads"
 import { Button } from "../../../../packages/ui/src/button";
 import { BsSendDashFill } from "react-icons/bs";
-
+import ChatText from "./chattexts"
 export default function ChatInterface() {
-  const { hasFile } = useUploadedFilesStore()
-  const isdisabled = hasFile ? false : true
+  const hasfile = useUploadedFilesStore(s => s.files.length > 0)
+
+  const isdisabled = hasfile ? false : true
   const { collapseNavbar, toggleCollapseNavbar, collapseStudio } = useCollapseStore();
 
   function click() {
@@ -39,7 +42,7 @@ export default function ChatInterface() {
 
       {/* Main content area */}
       <div className="flex-1 flex flex-col items-center justify-center px-4">
-        <SparklesPreview />
+        {hasfile ? <ChatText /> : <SparklesPreview />}
 
         {/* Chat input */}
         <div className="w-full max-w-2xl mt-8">
@@ -52,8 +55,8 @@ export default function ChatInterface() {
             />
             <Button
               className={`w-11 h-11 rounded-lg flex items-center justify-center transition-all duration-200 ${isdisabled
-                  ? 'bg-neutral-800 text-neutral-600 cursor-not-allowed'
-                  : 'btn-primary'
+                ? 'bg-neutral-800 text-neutral-600 cursor-not-allowed'
+                : 'btn-primary'
                 }`}
               handelonclick={click}
             >

@@ -1,3 +1,5 @@
+"use client";
+
 import { useUploadedFilesStore } from "../hooks/zustand/handeluploads";
 import React from "react";
 

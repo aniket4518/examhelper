@@ -27,19 +27,25 @@ export type AggregateFileUpload = {
 export type FileUploadMinAggregateOutputType = {
   id: string | null
   url: string | null
+  filename: string | null
   userId: string | null
+  createdAt: Date | null
 }
 
 export type FileUploadMaxAggregateOutputType = {
   id: string | null
   url: string | null
+  filename: string | null
   userId: string | null
+  createdAt: Date | null
 }
 
 export type FileUploadCountAggregateOutputType = {
   id: number
   url: number
+  filename: number
   userId: number
+  createdAt: number
   _all: number
 }
 
@@ -47,19 +53,25 @@ export type FileUploadCountAggregateOutputType = {
 export type FileUploadMinAggregateInputType = {
   id?: true
   url?: true
+  filename?: true
   userId?: true
+  createdAt?: true
 }
 
 export type FileUploadMaxAggregateInputType = {
   id?: true
   url?: true
+  filename?: true
   userId?: true
+  createdAt?: true
 }
 
 export type FileUploadCountAggregateInputType = {
   id?: true
   url?: true
+  filename?: true
   userId?: true
+  createdAt?: true
   _all?: true
 }
 
@@ -138,7 +150,9 @@ export type FileUploadGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inter
 export type FileUploadGroupByOutputType = {
   id: string
   url: string
+  filename: string
   userId: string
+  createdAt: Date
   _count: FileUploadCountAggregateOutputType | null
   _min: FileUploadMinAggregateOutputType | null
   _max: FileUploadMaxAggregateOutputType | null
@@ -165,14 +179,18 @@ export type FileUploadWhereInput = {
   NOT?: Prisma.FileUploadWhereInput | Prisma.FileUploadWhereInput[]
   id?: Prisma.StringFilter<"FileUpload"> | string
   url?: Prisma.StringFilter<"FileUpload"> | string
+  filename?: Prisma.StringFilter<"FileUpload"> | string
   userId?: Prisma.StringFilter<"FileUpload"> | string
+  createdAt?: Prisma.DateTimeFilter<"FileUpload"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }
 
 export type FileUploadOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   url?: Prisma.SortOrder
+  filename?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
 }
 
@@ -182,14 +200,18 @@ export type FileUploadWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.FileUploadWhereInput[]
   NOT?: Prisma.FileUploadWhereInput | Prisma.FileUploadWhereInput[]
   url?: Prisma.StringFilter<"FileUpload"> | string
+  filename?: Prisma.StringFilter<"FileUpload"> | string
   userId?: Prisma.StringFilter<"FileUpload"> | string
+  createdAt?: Prisma.DateTimeFilter<"FileUpload"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }, "id">
 
 export type FileUploadOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   url?: Prisma.SortOrder
+  filename?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
   _count?: Prisma.FileUploadCountOrderByAggregateInput
   _max?: Prisma.FileUploadMaxOrderByAggregateInput
   _min?: Prisma.FileUploadMinOrderByAggregateInput
@@ -201,48 +223,64 @@ export type FileUploadScalarWhereWithAggregatesInput = {
   NOT?: Prisma.FileUploadScalarWhereWithAggregatesInput | Prisma.FileUploadScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"FileUpload"> | string
   url?: Prisma.StringWithAggregatesFilter<"FileUpload"> | string
+  filename?: Prisma.StringWithAggregatesFilter<"FileUpload"> | string
   userId?: Prisma.StringWithAggregatesFilter<"FileUpload"> | string
+  createdAt?: Prisma.DateTimeWithAggregatesFilter<"FileUpload"> | Date | string
 }
 
 export type FileUploadCreateInput = {
   id?: string
   url: string
+  filename: string
+  createdAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutFileUploadsInput
 }
 
 export type FileUploadUncheckedCreateInput = {
   id?: string
   url: string
+  filename: string
   userId: string
+  createdAt?: Date | string
 }
 
 export type FileUploadUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   url?: Prisma.StringFieldUpdateOperationsInput | string
+  filename?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutFileUploadsNestedInput
 }
 
 export type FileUploadUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   url?: Prisma.StringFieldUpdateOperationsInput | string
+  filename?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type FileUploadCreateManyInput = {
   id?: string
   url: string
+  filename: string
   userId: string
+  createdAt?: Date | string
 }
 
 export type FileUploadUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   url?: Prisma.StringFieldUpdateOperationsInput | string
+  filename?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type FileUploadUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   url?: Prisma.StringFieldUpdateOperationsInput | string
+  filename?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type FileUploadListRelationFilter = {
@@ -258,19 +296,25 @@ export type FileUploadOrderByRelationAggregateInput = {
 export type FileUploadCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   url?: Prisma.SortOrder
+  filename?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
 }
 
 export type FileUploadMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   url?: Prisma.SortOrder
+  filename?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
 }
 
 export type FileUploadMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   url?: Prisma.SortOrder
+  filename?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
 }
 
 export type FileUploadCreateNestedManyWithoutUserInput = {
@@ -318,11 +362,15 @@ export type FileUploadUncheckedUpdateManyWithoutUserNestedInput = {
 export type FileUploadCreateWithoutUserInput = {
   id?: string
   url: string
+  filename: string
+  createdAt?: Date | string
 }
 
 export type FileUploadUncheckedCreateWithoutUserInput = {
   id?: string
   url: string
+  filename: string
+  createdAt?: Date | string
 }
 
 export type FileUploadCreateOrConnectWithoutUserInput = {
@@ -357,27 +405,37 @@ export type FileUploadScalarWhereInput = {
   NOT?: Prisma.FileUploadScalarWhereInput | Prisma.FileUploadScalarWhereInput[]
   id?: Prisma.StringFilter<"FileUpload"> | string
   url?: Prisma.StringFilter<"FileUpload"> | string
+  filename?: Prisma.StringFilter<"FileUpload"> | string
   userId?: Prisma.StringFilter<"FileUpload"> | string
+  createdAt?: Prisma.DateTimeFilter<"FileUpload"> | Date | string
 }
 
 export type FileUploadCreateManyUserInput = {
   id?: string
   url: string
+  filename: string
+  createdAt?: Date | string
 }
 
 export type FileUploadUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   url?: Prisma.StringFieldUpdateOperationsInput | string
+  filename?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type FileUploadUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   url?: Prisma.StringFieldUpdateOperationsInput | string
+  filename?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type FileUploadUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   url?: Prisma.StringFieldUpdateOperationsInput | string
+  filename?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -385,31 +443,39 @@ export type FileUploadUncheckedUpdateManyWithoutUserInput = {
 export type FileUploadSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   url?: boolean
+  filename?: boolean
   userId?: boolean
+  createdAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["fileUpload"]>
 
 export type FileUploadSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   url?: boolean
+  filename?: boolean
   userId?: boolean
+  createdAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["fileUpload"]>
 
 export type FileUploadSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   url?: boolean
+  filename?: boolean
   userId?: boolean
+  createdAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["fileUpload"]>
 
 export type FileUploadSelectScalar = {
   id?: boolean
   url?: boolean
+  filename?: boolean
   userId?: boolean
+  createdAt?: boolean
 }
 
-export type FileUploadOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "url" | "userId", ExtArgs["result"]["fileUpload"]>
+export type FileUploadOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "url" | "filename" | "userId" | "createdAt", ExtArgs["result"]["fileUpload"]>
 export type FileUploadInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
@@ -428,7 +494,9 @@ export type $FileUploadPayload<ExtArgs extends runtime.Types.Extensions.Internal
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     url: string
+    filename: string
     userId: string
+    createdAt: Date
   }, ExtArgs["result"]["fileUpload"]>
   composites: {}
 }
@@ -855,7 +923,9 @@ export interface Prisma__FileUploadClient<T, Null = never, ExtArgs extends runti
 export interface FileUploadFieldRefs {
   readonly id: Prisma.FieldRef<"FileUpload", 'String'>
   readonly url: Prisma.FieldRef<"FileUpload", 'String'>
+  readonly filename: Prisma.FieldRef<"FileUpload", 'String'>
   readonly userId: Prisma.FieldRef<"FileUpload", 'String'>
+  readonly createdAt: Prisma.FieldRef<"FileUpload", 'DateTime'>
 }
     
 

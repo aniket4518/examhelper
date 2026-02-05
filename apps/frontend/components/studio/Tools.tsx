@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { useCollapseStore } from "../../hooks/zustand/CheckCollapsestate";
 
@@ -33,8 +35,8 @@ export default function Tools() {
           <button
             key={idx}
             className={`tool-card group ${collapseStudio
-                ? "w-10 h-10 flex items-center justify-center"
-                : "flex items-center gap-3 p-3 text-left w-full"
+              ? "w-10 h-10 flex items-center justify-center"
+              : "flex items-center gap-3 p-3 text-left w-full"
               }`}
           >
             {tool.icon === "BETA" ? (

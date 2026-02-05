@@ -1,8 +1,8 @@
+"use client";
+
 import { FiFilePlus } from "react-icons/fi"
-import { useUploadedFilesStore } from "../hooks/zustand/handeluploads"
 
 export default function Nodocs() {
-    const { files, hasFile } = useUploadedFilesStore()
     return (
         <div className="flex flex-col items-center justify-center text-center px-4 py-8">
             <div className="w-14 h-14 rounded-xl bg-neutral-900 border border-neutral-800 flex items-center justify-center mb-4">

@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import { Button } from "../../../packages/ui/src/button";
 import { useCollapseStore } from "../hooks/zustand/CheckCollapsestate";

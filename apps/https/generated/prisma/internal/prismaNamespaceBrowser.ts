@@ -108,7 +108,9 @@ export type MemberScalarFieldEnum = (typeof MemberScalarFieldEnum)[keyof typeof 
 export const FileUploadScalarFieldEnum = {
   id: 'id',
   url: 'url',
-  userId: 'userId'
+  filename: 'filename',
+  userId: 'userId',
+  createdAt: 'createdAt'
 } as const
 
 export type FileUploadScalarFieldEnum = (typeof FileUploadScalarFieldEnum)[keyof typeof FileUploadScalarFieldEnum]

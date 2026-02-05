@@ -1,3 +1,5 @@
+"use client";
+
 import { cn } from "../../lib/utils";
 import React, { useRef } from "react";
 import { useUploadedFilesStore } from "../../hooks/zustand/handeluploads";
@@ -83,14 +85,14 @@ export const FileUpload: React.FC<{ onChange?: (files: File[]) => void }> = ({ o
           <p className="relative z-20 font-sans font-normal text-neutral-400 dark:text-neutral-400 text-base mt-2">
             Drag or drop your files here or click to upload
           </p>
-          <div className="relative w-full mt-10 max-w-xl mx-auto">
+          <div className="relative w-full mt-4 max-w-xl mx-auto">
             {files.length > 0 &&
               files.map((file, idx) => (
                 <motion.div
                   key={"file" + idx}
                   layoutId={idx === 0 ? "file-upload" : "file-upload-" + idx}
                   className={cn(
-                    "relative overflow-hidden z-40 bg-white dark:bg-neutral-900 flex flex-col items-start justify-start md:h-24 p-4 mt-4 w-full mx-auto rounded-md",
+                    "relative overflow-hidden z-40 bg-white dark:bg-neutral-900 flex flex-col items-start justify-start md:h-24 p-4 mt-2 w-full mx-auto rounded-md",
                     "shadow-sm"
                   )}
                 >

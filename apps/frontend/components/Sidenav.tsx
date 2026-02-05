@@ -13,7 +13,7 @@ import { ShowFilesList } from "./fileslisst"
 
 export default function Sidenav() {
   const { collapseNavbar, toggleCollapseNavbar } = useCollapseStore();
-  const { files, hasFile } = useUploadedFilesStore()
+  const hasFile = useUploadedFilesStore(s => s.files.length > 0)
   const { showUpload, setUpload } = useUploadStore()
 
   return (
@@ -31,7 +31,7 @@ export default function Sidenav() {
               : "btn-ghost"
             }
           `}
-          handelonclick={setUpload}
+          handelonclick={() => setUpload(true)}
         >
           {(collapseNavbar ? <LuUpload className="text-base" /> : <><LuUpload className="mr-2" /> Add Resources</>)}
         </Button>

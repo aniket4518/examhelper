@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useCallback, useEffect, useRef } from 'react';
 import { motion, useMotionValue, useAnimationFrame, useTransform } from 'motion/react';
 import './ShinyText.css';
@@ -26,7 +28,7 @@ const ShinyText = ({
   yoyo,
   pauseOnHover,
   direction,
-  delay:delay=2
+  delay: delay = 2
 }: Shiny) => {
   const [isPaused, setIsPaused] = useState(false);
   const progress = useMotionValue(0);

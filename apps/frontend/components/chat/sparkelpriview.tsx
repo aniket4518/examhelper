@@ -20,7 +20,7 @@ export function SparklesPreview() {
 
         <Button
           className="relative btn-primary px-6 py-2.5 rounded-lg text-sm font-medium z-10"
-          handelonclick={setUpload}
+          handelonclick={() => setUpload(true)}
         >
           Upload
         </Button>
