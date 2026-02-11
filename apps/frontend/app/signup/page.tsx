@@ -2,11 +2,11 @@ import { Metadata } from "next";
 import { LoginForm } from "@/components/auth/LoginForm";
 
 export const metadata: Metadata = {
-  title: "Login | Cram Spot",
-  description: "Login to your Cram Spot account to access your study materials and more.",
+  title: "Sign Up | Cram Spot",
+  description: "Create your Cram Spot account to start studying smarter.",
 };
 
-export default function LoginPage() {
+export default function SignupPage() {
   return (
     <div className="min-h-screen bg-neutral-950 flex items-center justify-center p-4"> 
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -15,7 +15,7 @@ export default function LoginPage() {
       </div>
  
       <div className="relative z-10 w-full max-w-md">
-        <LoginForm />
+        <LoginForm mode="signup" />
       </div>
     </div>
   );
