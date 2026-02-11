@@ -16,7 +16,8 @@ import {
 } from "@/components/ui/card";
 import { useForm } from "@/hooks/useForm";
 import { useAuthStore } from "@/hooks/zustand/authStore";
-import { loginSchema, getFieldRequirements, type LoginFormData } from "@/lib/validations/login";
+import { loginSchema, signupSchema, getFieldRequirements, type LoginFormData, type SignupFormData } from "@/lib/validations/login";
+import { api } from "@/lib/api";
 
 // Icons
 const EyeIcon = () => (
@@ -57,37 +58,44 @@ const AlertIcon = () => (
 interface LoginFormProps {
   className?: string;
   onSuccess?: () => void;
+  mode?: "signin" | "signup";
 }
 
-export function LoginForm({ className, onSuccess }: LoginFormProps) {
+export function LoginForm({ className, onSuccess, mode = "signin" }: LoginFormProps) {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
-  const [showRequirements, setShowRequirements] = useState<"email" | "password" | null>(null);
+  const [showRequirements, setShowRequirements] = useState<"email" | "password" | "name" | null>(null);
+  const isSignup = mode === "signup";
   
   const { login, setLoading, setError } = useAuthStore();
 
-  const handleLogin = async (data: LoginFormData) => {
+  const handleSubmitAuth = async (data: LoginFormData | SignupFormData) => {
     setLoading(true);
     setError(null);
     
     try {
-      const response = await fetch("/api/auth/login", {
+      const endpoint = isSignup
+        ? api("/user/signup")
+        : api("/user/signin");
+      const response = await fetch(endpoint, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        credentials: "include", // Important: allows cookies to be set
+        credentials: "include",
         body: JSON.stringify(data),
       });
 
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.message || "Invalid email or password. Please try again.");
+        throw new Error(
+          errorData.error || errorData.message || 
+          (isSignup ? "Failed to create account. Please try again." : "Invalid email or password. Please try again.")
+        );
       }
 
       const responseData = await response.json();
-      
-      // Store user info in zustand (token is in HttpOnly cookie from server)
+       
       login({
         id: responseData.user.id,
         email: responseData.user.email,
@@ -95,7 +103,7 @@ export function LoginForm({ className, onSuccess }: LoginFormProps) {
       });
 
       onSuccess?.();
-      router.push("/dashboard");
+      router.push("/");
     } catch (error) {
       setLoading(false);
       throw error;
@@ -111,19 +119,20 @@ export function LoginForm({ className, onSuccess }: LoginFormProps) {
     handleSubmit,
     getFieldProps,
   } = useForm({
-    schema: loginSchema,
-    onSubmit: handleLogin,
-  });
-
-  // Email validation checks for requirements display
+    schema: isSignup ? signupSchema : loginSchema,
+    onSubmit: handleSubmitAuth,
+  }); 
+  const nameChecks = {
+    hasMinLength: (isSignup && (values as any).name?.length || 0) >= 3,
+    hasMaxLength: (isSignup && (values as any).name?.length || 0) <= 100,
+  }; 
   const emailChecks = {
     hasValue: (values.email?.length || 0) > 0,
     hasAt: values.email?.includes("@") || false,
     hasDomain: /\.[a-zA-Z]{2,}$/.test(values.email || ""),
     isValidFormat: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(values.email || ""),
   };
-
-  // Password validation checks
+ 
   const passwordChecks = {
     hasMinLength: (values.password?.length || 0) >= 6,
     hasMaxLength: (values.password?.length || 0) <= 50,
@@ -133,9 +142,9 @@ export function LoginForm({ className, onSuccess }: LoginFormProps) {
     <div className={cn("flex flex-col gap-6", className)}>
       <Card>
         <CardHeader className="text-center">
-          <CardTitle className="text-xl">Welcome back</CardTitle>
+          <CardTitle className="text-xl">{isSignup ? "Create an account" : "Welcome back"}</CardTitle>
           <CardDescription>
-            Login to your account to continue
+            {isSignup ? "Sign up to get started with Cram Spot" : "Login to your account to continue"}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -146,6 +155,44 @@ export function LoginForm({ className, onSuccess }: LoginFormProps) {
                 <div className="flex items-center gap-2 rounded-lg border border-red-500/50 bg-red-500/10 p-3 text-sm text-red-400">
                   <AlertIcon />
                   <span>{submitError}</span>
+                </div>
+              )} 
+              {isSignup && (
+                <div className="grid gap-2">
+                  <Label htmlFor="name" error={(touched as any).name && !!(errors as any).name}>
+                    Name <span className="text-red-500">*</span>
+                  </Label>
+                  <Input
+                    id="name"
+                    type="text"
+                    placeholder="Your full name"
+                    autoComplete="name"
+                    {...getFieldProps("name" as any)}
+                    onFocus={() => setShowRequirements("name")}
+                    aria-describedby="name-error name-requirements"
+                    aria-invalid={(touched as any).name && !!(errors as any).name}
+                  />
+                  {(touched as any).name && (errors as any).name && (
+                    <p id="name-error" className="text-sm text-red-500 flex items-center gap-1">
+                      <AlertIcon />
+                      {(errors as any).name}
+                    </p>
+                  )}
+                  {showRequirements === "name" && (
+                    <div id="name-requirements" className="rounded-lg border border-neutral-700 bg-neutral-800 p-3 text-xs">
+                      <p className="mb-2 font-medium text-neutral-300">Name requirements:</p>
+                      <ul className="space-y-1">
+                        <li className={cn("flex items-center gap-2", nameChecks.hasMinLength ? "text-green-400" : "text-neutral-400")}>
+                          {nameChecks.hasMinLength ? <CheckIcon /> : <XIcon />}
+                          Minimum 3 characters
+                        </li>
+                        <li className={cn("flex items-center gap-2", nameChecks.hasMaxLength ? "text-green-400" : "text-neutral-400")}>
+                          {nameChecks.hasMaxLength ? <CheckIcon /> : <XIcon />}
+                          Maximum 100 characters
+                        </li>
+                      </ul>
+                    </div>
+                  )}
                 </div>
               )}
 
@@ -210,19 +257,21 @@ export function LoginForm({ className, onSuccess }: LoginFormProps) {
                   <Label htmlFor="password" error={touched.password && !!errors.password}>
                     Password <span className="text-red-500">*</span>
                   </Label>
-                  <Link
-                    href="/forgot-password"
-                    className="text-sm text-blue-500 underline-offset-4 hover:underline"
-                  >
-                    Forgot password?
-                  </Link>
+                  {!isSignup && (
+                    <Link
+                      href="/forgot-password"
+                      className="text-sm text-blue-500 underline-offset-4 hover:underline"
+                    >
+                      Forgot password?
+                    </Link>
+                  )}
                 </div>
                 <div className="relative">
                   <Input
                     id="password"
                     type={showPassword ? "text" : "password"}
                     placeholder="Enter your password"
-                    autoComplete="current-password"
+                    autoComplete={isSignup ? "new-password" : "current-password"}
                     {...getFieldProps("password")}
                     onFocus={() => setShowRequirements("password")}
                     className="pr-10"
@@ -270,7 +319,9 @@ export function LoginForm({ className, onSuccess }: LoginFormProps) {
 
               {/* Submit Button */}
               <Button type="submit" className="w-full" isLoading={isSubmitting}>
-                {isSubmitting ? "Signing in..." : "Sign in"}
+                {isSubmitting
+                  ? (isSignup ? "Creating account..." : "Signing in...")
+                  : (isSignup ? "Sign up" : "Sign in")}
               </Button>
 
               {/* Divider */}
@@ -328,12 +379,23 @@ export function LoginForm({ className, onSuccess }: LoginFormProps) {
               </div>
             </div>
 
-            {/* Sign Up Link */}
+            {/* Toggle Link */}
             <div className="mt-6 text-center text-sm text-neutral-400">
-              Don&apos;t have an account?{" "}
-              <Link href="/signup" className="text-blue-500 underline-offset-4 hover:underline">
-                Sign up
-              </Link>
+              {isSignup ? (
+                <>
+                  Already have an account?{" "}
+                  <Link href="/login" className="text-blue-500 underline-offset-4 hover:underline">
+                    Sign in
+                  </Link>
+                </>
+              ) : (
+                <>
+                  Don&apos;t have an account?{" "}
+                  <Link href="/signup" className="text-blue-500 underline-offset-4 hover:underline">
+                    Sign up
+                  </Link>
+                </>
+              )}
             </div>
           </form>
         </CardContent>

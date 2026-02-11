@@ -5,6 +5,7 @@ import { Button } from "../../../packages/ui/src/button";
 import { IoClose } from "react-icons/io5";
 import { useUploadStore } from "../hooks/zustand/UploadState"
 import { useUploadedFilesStore } from "../hooks/zustand/handeluploads"
+import { api } from "@/lib/api";
 
 export function Uploadfile() {
   const { addFiles, clearFiles, files } = useUploadedFilesStore();
@@ -38,7 +39,7 @@ export function Uploadfile() {
     });
 
     try {
-      const response = await fetch("http://localhost:3001/uploads", {
+      const response = await fetch(api("/uploads"), {
         method: "POST",
         body: formData,
         // Don't set Content-Type - browser sets it automatically with boundary
